@@ -38,9 +38,34 @@ const MORSE_TABLE = {
 };
 
 function decode(expr) {
-    // write your solution here
+    let result = "";
+
+    for (let i = 0; i < expr.length; i = i + 10) {
+        // Разбиваем выражение на слова по 10 символов
+        const word = expr.slice(i, i + 10);
+
+        // Определяем пробел как 10 точек
+        if (word === "**********") {
+            result = result + " "
+        }
+
+        else {
+           
+           let symbol = "";
+           for (let k = 0; k < 10; k = k + 2) {
+            // Берём каждую пару из слова 
+            const pair = word.slice(k, k+2);
+            // Если это 10, то переводим в точку
+            if (pair === '10') symbol = symbol + ".";
+            // Если это 11, то переводим в тире
+            else if (pair === '11') symbol = symbol + "-";
+           }
+           result = result + MORSE_TABLE[symbol] || "";
+        }
+    }
+    return result;
 }
 
 module.exports = {
     decode
-}
+};
